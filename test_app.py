@@ -1,3 +1,4 @@
+
 from app import app
 
 
@@ -5,7 +6,9 @@ def test_home():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert response.get_data(as_text=True) == "Welcome to the DevOps Practical Lab!"
+    assert response.get_data(as_text=True) == (
+        "Welcome to the DevOps Practical Lab - Production and Development!"
+    )
 
 
 def test_health():
@@ -13,3 +16,11 @@ def test_health():
     response = client.get("/health")
     assert response.status_code == 200
     assert response.get_json() == {"status": "UP"}
+
+
+def test_version():
+    client = app.test_client()
+    response = client.get("/version")
+    assert response.status_code == 200
+    assert response.get_json() == {"version": "1.0.0"}
+
